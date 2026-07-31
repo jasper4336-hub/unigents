@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Unigent 完整使用指南｜大學生課表與校園社群</title>
+<meta name="description" content="Unigent 五大功能完整教學：課表、GPA 計算、校曆整合、多課表管理、出缺席紀錄，含鎖定畫面即時動態設定。由 unigent 校園大使整理，非官方網站。">
+
+<meta property="og:title" content="Unigent 完整使用指南">
+<meta property="og:description" content="五大功能一次看懂——課表、GPA、校曆、出缺席、鎖定畫面即時動態。校園大使整理。">
+<meta property="og:image" content="img2/00-hero.jpg">
+<meta property="og:type" content="website">
+
+<style>
+/* ============================================================
+   設計基準（2026 行動優先網頁標準）
+   ・大字級標題建立層次｜行動優先｜CTA 落拇指區
+   ・大量留白，一次一件事｜輕量捲動淡入
+   ・截圖為 iPhone 直式，圖庫採 scroll-snap 橫向滑動
+   ============================================================ */
+:root{
+  --ink:#111418; --ink-soft:#5b636e; --line:#e6e9ee;
+  --bg:#fff; --bg-soft:#f6f8fa;
+  --accent:#6d4aff; --accent-soft:#f0ecff; --accent-line:#ddd4ff;
+  --radius:16px; --maxw:760px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{
+  font-family:"Noto Sans TC","PingFang TC","Hiragino Sans TC","Microsoft JhengHei",system-ui,-apple-system,sans-serif;
+  color:var(--ink);background:var(--bg);line-height:1.75;font-size:17px;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 22px}
+
+/* 揭露橫幅 */
+.disclose{
+  background:var(--accent-soft);color:#4a2fd0;font-size:14px;text-align:center;
+  padding:11px 18px;border-bottom:1px solid var(--accent-line);line-height:1.55;
+}
+.disclose strong{font-weight:700}
+
+/* 首屏 */
+.hero{padding:60px 0 44px;text-align:center}
+.hero h1{font-size:clamp(34px,8.5vw,54px);line-height:1.18;letter-spacing:-.02em;font-weight:800;margin-bottom:18px}
+.hero .sub{font-size:clamp(16px,4vw,19px);color:var(--ink-soft);max-width:32em;margin:0 auto 30px}
+.hero .meta{font-size:14px;color:var(--ink-soft);margin-top:22px}
+
+.btn{
+  display:inline-block;background:var(--accent);color:#fff;font-size:18px;font-weight:700;
+  text-decoration:none;padding:17px 40px;border-radius:999px;
+  box-shadow:0 6px 20px rgba(109,74,255,.3);transition:transform .18s ease,box-shadow .18s ease;
+}
+.btn:hover{transform:translateY(-2px);box-shadow:0 10px 26px rgba(109,74,255,.36)}
+.btn:active{transform:translateY(0)}
+
+section{padding:54px 0;border-top:1px solid var(--line)}
+section.soft{background:var(--bg-soft)}
+.eyebrow{font-size:13px;font-weight:700;letter-spacing:.14em;color:var(--accent);text-transform:uppercase;margin-bottom:12px}
+h2{font-size:clamp(26px,6vw,34px);line-height:1.3;font-weight:800;letter-spacing:-.015em;margin-bottom:14px}
+h3{font-size:20px;font-weight:700;margin-bottom:8px}
+p{margin-bottom:14px}
+p.lead{color:var(--ink-soft)}
+
+/* 功能卡 */
+.feature{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:26px 24px;margin-bottom:22px}
+.feature .num{
+  display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;
+  border-radius:10px;background:var(--accent-soft);color:var(--accent);font-weight:800;font-size:16px;margin-bottom:14px;
+}
+.feature ul{list-style:none;margin-top:10px}
+.feature li{position:relative;padding-left:22px;margin-bottom:7px;color:var(--ink-soft)}
+.feature li::before{content:"";position:absolute;left:4px;top:.72em;width:6px;height:6px;border-radius:50%;background:var(--accent)}
+
+/* 誠實提醒（實際使用限制） */
+.note-real{
+  background:#fffaf0;border:1px solid #f5e0b8;border-radius:12px;
+  padding:14px 16px;margin-top:14px;font-size:15px;color:#7a5b1e;line-height:1.7;
+}
+.note-real strong{color:#5d4413}
+
+/* ============================================================
+   ★★★ 圖庫（橫向滑動）★★★
+   ・圖片放 images/，檔名對照下方 src
+   ・多張時可左右滑動，手機支援手勢、桌機可用箭頭或拖曳
+   ============================================================ */
+.gallery-wrap{margin:20px 0 4px}
+.gallery{
+  display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;
+  -webkit-overflow-scrolling:touch;padding:4px 2px 12px;scrollbar-width:thin;
+}
+.gallery::-webkit-scrollbar{height:6px}
+.gallery::-webkit-scrollbar-thumb{background:#d3d8e0;border-radius:99px}
+/* 固定寬度 → 每張間距完全相等，不受圖片比例或說明長度影響 */
+.gallery figure{flex:0 0 auto;scroll-snap-align:center;text-align:center;width:262px;max-width:78vw}
+.gallery img{
+  display:block;width:100%;height:auto;
+  border:1px solid var(--line);border-radius:14px;background:#000;
+}
+.gallery figcaption{font-size:13px;color:var(--ink-soft);margin-top:8px;width:100%;line-height:1.5}
+.gallery.single{justify-content:center}
+.gallery.single figure{width:300px}
+/* 主視覺可為任意比例 */
+.hero .gallery-wrap{margin:34px auto 0;max-width:640px}
+.hero .gallery{overflow:visible;padding:0;justify-content:center}
+.hero .gallery figure{width:100%}
+.hero .gallery img{
+  height:auto;width:100%;max-width:100%;border-radius:18px;
+  border:1px solid rgba(0,0,0,.06);
+  box-shadow:0 18px 44px -12px rgba(30,20,80,.28), 0 4px 12px -4px rgba(30,20,80,.12);
+}
+.swipe-hint{font-size:13px;color:var(--ink-soft);text-align:center;margin-top:2px}
+.swipe-hint b{color:var(--accent);font-weight:700}
+/* 圖片缺失時的佔位 */
+.gallery figure.empty img{display:none}
+.gallery figure.empty::before{
+  content:"🖼 " attr(data-hint);display:flex;align-items:center;justify-content:center;
+  width:100%;aspect-ratio:.46;padding:20px;text-align:center;
+  border:2px dashed #c8d0da;border-radius:14px;
+  background:repeating-linear-gradient(45deg,#fafbfc,#fafbfc 10px,#f3f5f8 10px,#f3f5f8 20px);
+  color:#7b8593;font-size:14px;line-height:1.6;
+}
+
+/* 步驟 */
+.steps{counter-reset:s;list-style:none}
+.steps li{counter-increment:s;position:relative;padding:0 0 26px 52px;border-left:2px solid var(--line);margin-left:16px}
+.steps li:last-child{border-left-color:transparent;padding-bottom:0}
+.steps li::before{
+  content:counter(s);position:absolute;left:-17px;top:-2px;width:32px;height:32px;border-radius:50%;
+  background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:15px;
+}
+.steps h3{margin-bottom:4px}
+.steps p{color:var(--ink-soft);margin-bottom:0}
+
+/* 常見問題 */
+details{border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin-bottom:12px;background:#fff}
+details[open]{border-color:var(--accent-line)}
+summary{font-weight:700;cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:14px}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"＋";color:var(--accent);font-weight:800;font-size:20px;flex-shrink:0}
+details[open] summary::after{content:"−"}
+details p{margin:12px 0 0;color:var(--ink-soft)}
+details ul{margin:10px 0 0 20px;color:var(--ink-soft)}
+details li{margin-bottom:6px}
+
+/* 學校清單 */
+.schools{
+  max-height:260px;overflow-y:auto;background:var(--bg-soft);border:1px solid var(--line);
+  border-radius:10px;padding:14px 16px;margin-top:12px;font-size:14.5px;line-height:1.9;color:var(--ink-soft);
+}
+.school-search{
+  width:100%;padding:11px 14px;border:1px solid var(--line);border-radius:10px;
+  font-size:15px;margin-top:12px;font-family:inherit;
+}
+.school-search:focus{outline:none;border-color:var(--accent)}
+
+/* 比較表 */
+.tablewrap{overflow-x:auto;margin-top:12px}
+table{border-collapse:collapse;width:100%;font-size:14.5px;min-width:460px}
+th,td{border:1px solid var(--line);padding:9px 11px;text-align:left}
+th{background:var(--bg-soft);font-weight:700}
+td:first-child{font-weight:600}
+
+.final{text-align:center;padding:60px 0 68px}
+.final p{color:var(--ink-soft);margin-bottom:28px}
+
+footer{background:var(--bg-soft);border-top:1px solid var(--line);padding:32px 0 40px;font-size:14px;color:var(--ink-soft)}
+footer .note{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin-bottom:18px;line-height:1.7}
+footer a{color:var(--accent)}
+.ver{
+  display:inline-block;background:#fff;border:1px solid var(--line);border-radius:999px;
+  padding:5px 14px;font-size:13px;margin-top:14px;font-variant-numeric:tabular-nums;
+}
+
+/* 回到頂部 */
+#toTop{
+  position:fixed;right:20px;bottom:20px;z-index:60;
+  width:48px;height:48px;border-radius:50%;border:none;cursor:pointer;
+  background:var(--accent);color:#fff;font-size:20px;line-height:1;
+  box-shadow:0 8px 22px rgba(109,74,255,.4);
+  opacity:0;visibility:hidden;transform:translateY(10px);
+  transition:opacity .28s ease,transform .28s ease,visibility .28s;
+}
+#toTop.show{opacity:1;visibility:visible;transform:none}
+#toTop:hover{background:#5a37e8}
+@supports(padding:max(0px)){#toTop{bottom:max(20px,env(safe-area-inset-bottom))}}
+
+
+/* 裝飾圖 */
+/* FAQ 標題：圖與標題並排，圖不搶版面 */
+.faq-head{display:flex;align-items:center;gap:18px;margin-bottom:22px}
+.faq-head .txt{flex:1;min-width:0}
+.faq-head .txt .eyebrow{margin-bottom:6px}
+.faq-head .txt h2{margin-bottom:0}
+.faq-head img{width:96px;height:auto;flex-shrink:0}
+@media(max-width:420px){ .faq-head{gap:12px} .faq-head img{width:74px} }
+
+/* 誠實提醒：貓咪置中放在文字下方 */
+.note-real.with-cat{text-align:left}
+.note-real .cat{display:block;width:132px;height:auto;margin:14px auto 2px}
+
+/* 開發者卡 */
+.devcard{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:26px 24px}
+.devhead{display:flex;align-items:center;gap:16px;margin-bottom:18px}
+.devhead img{width:66px;height:66px;border-radius:50%;object-fit:cover;flex-shrink:0;border:1px solid var(--line)}
+.devhead .who{font-weight:800;font-size:18px;line-height:1.4}
+.devhead .who span{display:block;font-weight:400;font-size:14px;color:var(--ink-soft);margin-top:2px}
+.quote{
+  border-left:3px solid var(--accent-line);padding:2px 0 2px 16px;margin:16px 0;
+  color:var(--ink-soft);font-size:15.5px;line-height:1.85;
+}
+.quote p{margin-bottom:10px}
+.quote p:last-child{margin-bottom:0}
+
+.rise{opacity:0;transform:translateY(18px);transition:opacity .55s ease,transform .55s ease}
+.rise.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){
+  .rise{opacity:1;transform:none;transition:none}
+  html{scroll-behavior:auto}
+}
+</style>
+</head>
+<body>
+
+<div class="disclose">
+  本頁由 <strong>unigent 校園大使 林禹丞</strong> 整理製作，<strong>非 unigent 官方網站</strong>。內容為個人使用心得與功能整理。
+</div>
+
+<!-- ============ 首屏 ============ -->
+<header class="hero">
+  <div class="wrap">
+    <h1>大學生的課表<br>不該這麼難排</h1>
+    <p class="sub">Unigent 五大功能一次看懂——課表、GPA 計算、校曆整合、多學期管理、出缺席紀錄。這份整理不管你最後用哪個 app 都能參考。</p>
+    <a class="btn" href="https://unigent-amb.s.gy/app">免費下載 Unigent</a>
+    <p class="meta">iOS 與 Android 皆可使用｜點擊後自動導向你的商店</p>
+
+    <div class="gallery-wrap">
+      <div class="gallery single">
+        <figure data-hint="圖片位置 00｜主視覺（img2/00-hero.jpg）">
+          <img src="img2/00-hero.jpg" alt="Unigent 課表週檢視">
+        </figure>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ============ 五大功能 ============ -->
+<section>
+  <div class="wrap">
+    <p class="eyebrow rise">Features</p>
+    <h2 class="rise">五個開學前先設定好的功能</h2>
+    <p class="lead rise">依「新生最有感」的順序排列。圖片可左右滑動查看。</p>
+
+    <!-- ① 校曆 -->
+    <div class="feature rise">
+      <div class="num">1</div>
+      <h3>行事曆整合校曆，三種檢視自由切換</h3>
+      <p>期中考週、棄選截止日、補假日直接顯示在行事曆上，不用自己翻教務處公告。</p>
+      <ul>
+        <li>① 只看自己的課程與待辦</li>
+        <li>② 課程＋校曆疊在一起看</li>
+        <li>③ 只看校曆，行政日程一目了然</li>
+      </ul>
+      <div class="gallery-wrap">
+        <div class="gallery">
+          <figure data-hint="img2/01-calendar-1.jpg">
+            <img src="img2/01-calendar-1.jpg" alt="校曆關閉，只顯示個人課程與考試">
+            <figcaption>① 校曆關閉——只看自己的課程與考試</figcaption>
+          </figure>
+          <figure data-hint="img2/01-calendar-2.jpg">
+            <img src="img2/01-calendar-2.jpg" alt="校曆開啟，課程與校曆同時顯示">
+            <figcaption>② 校曆開啟——課程與校慶、補假、期中考週一起看</figcaption>
+          </figure>
+          <figure data-hint="img2/01-calendar-3.jpg">
+            <img src="img2/01-calendar-3.jpg" alt="僅校曆模式">
+            <figcaption>③ 僅校曆——只留行政日程，畫面最乾淨</figcaption>
+          </figure>
+        </div>
+        <p class="swipe-hint">← 左右滑動看 <b>3</b> 張 →</p>
+      </div>
+    </div>
+
+    <!-- ② GPA -->
+    <div class="feature rise">
+      <div class="num">2</div>
+      <h3>GPA 與畢業學分自動換算</h3>
+      <p>輸入每科成績、選好課程類別之後，整體績點、主修績點、百分制平均與歷學期趨勢都會自動算出來。</p>
+      <ul>
+        <li>成績可直接打分數，系統自動換算等第與績點（如 93 → A+ / 4.3）</li>
+        <li><strong>類別自己選</strong>：系必修、系選修、通識、自由選修等，<strong>依你們學校的規定自行分類</strong></li>
+        <li>畢業進度依領域分別計算，直接顯示各類還差幾學分</li>
+        <li>可切換學期查看，並附成績分布比例</li>
+      </ul>
+      <div class="gallery-wrap">
+        <div class="gallery">
+          <figure data-hint="img2/02-gpa-2.jpg">
+            <img src="img2/02-gpa-2.jpg" alt="畢業進度與 GPA 儀表板">
+            <figcaption>畢業進度、雙績點、各領域學分與歷學期趨勢</figcaption>
+          </figure>
+          <figure data-hint="img2/02-gpa-3.jpg">
+            <img src="img2/02-gpa-3.jpg" alt="切換學期">
+            <figcaption>可切換大一上到大四下，逐學期查看</figcaption>
+          </figure>
+          <figure data-hint="img2/02-gpa-1.jpg">
+            <img src="img2/02-gpa-1.jpg" alt="輸入成績與選擇課程類別">
+            <figcaption>輸入分數、選類別——右上角「匯入課表」可把課表的課帶進來，不用重打</figcaption>
+          </figure>
+        </div>
+        <p class="swipe-hint">← 左右滑動看 <b>3</b> 張 →</p>
+      </div>
+      <div class="note-real">
+        <strong>實際使用提醒：</strong>課程類別目前<strong>需要自己選</strong>，系統不會自動判定是必修還是通識。好處是可以完全照你們學校的畢業規定去分，壞處是第一次要花點時間。建議建課表時順手設好，之後就不用再管。
+      </div>
+    </div>
+
+    <!-- ③ 即時動態 -->
+    <div class="feature rise">
+      <div class="num">3</div>
+      <h3>鎖定畫面直接看今天的課</h3>
+      <p>開啟即時動態後，不用打開 app，鎖定畫面和動態島就顯示今日課程與待辦。</p>
+      <ul>
+        <li>打開 App 時會自動建立或更新</li>
+        <li>依 iOS 機制，每次啟動最多維持約 8 小時</li>
+        <li>想顯示更久可搭配 iPhone 捷徑自動化（下一節有完整教學）</li>
+      </ul>
+      <div class="gallery-wrap">
+        <div class="gallery single">
+          <figure data-hint="img2/03-live-1.jpg">
+            <img src="img2/03-live-1.jpg" alt="即時動態設定與說明">
+            <figcaption>設定 → 即時動態 → 開啟「鎖定畫面即時動態」</figcaption>
+          </figure>
+        </div>
+      </div>
+    </div>
+
+    <!-- ④ 多學期課表 -->
+    <div class="feature rise">
+      <div class="num">4</div>
+      <h3>課表建立、多學期保存與好友分享</h3>
+      <p>從主頁下方<strong>中間的日曆按鍵</strong>進入課表。第一次使用要先建立一份課表，後續功能才會開放。</p>
+
+      <p style="margin-top:16px"><strong>右上角三個按鍵</strong>（從紫色「＋」往左數，含「＋」本身）：</p>
+      <ul>
+        <li><strong>＋ 新增課程</strong>——目前<strong>只能手動輸入</strong>課名、時間、學分、教室、授課老師</li>
+        <li><strong>計算機圖示</strong>——GPA 與畢業學分自動換算（就是上面第 2 點）</li>
+        <li><strong>欄位圖示</strong>——不同學年度／學期的課表建立與切換</li>
+      </ul>
+
+      <p style="margin-top:16px"><strong>好友與分享：</strong></p>
+      <ul>
+        <li>建好第一份課表後，右上角才會出現<strong>加好友</strong>與<strong>分享連結</strong></li>
+        <li>⚠️ <strong>分享連結有 24 小時有效期限</strong>，過期要重新產生</li>
+        <li>加好友後可查看對方課表，方便約時間</li>
+      </ul>
+
+      <div class="gallery-wrap">
+        <div class="gallery">
+          <figure data-hint="img2/04-timetable-1.jpg">
+            <img src="img2/04-timetable-1.jpg" alt="課表主畫面與右上角功能鍵">
+            <figcaption>課表主畫面。右上角由左至右：學期切換／GPA 計算／新增課程</figcaption>
+          </figure>
+          <figure data-hint="img2/04-timetable-2.jpg">
+            <img src="img2/04-timetable-2.jpg" alt="我的課表，多學期管理">
+            <figcaption>歷年課表都保存著，<strong>綠色星星</strong>是主要課表</figcaption>
+          </figure>
+        </div>
+        <p class="swipe-hint">← 左右滑動看 <b>2</b> 張 →</p>
+      </div>
+
+      <div class="note-real">
+        <strong>兩個一定要知道的：</strong><br>
+        ① <strong>綠色星星＝主要課表</strong>，這是<strong>推播通知認定的標準</strong>。如果你有好幾個學期的課表，記得把「這學期」設成星星，不然提醒會跑錯。<br>
+        ② 好友課表目前是<strong>切換查看</strong>——可以點進去看對方怎麼排、什麼時間有課，<strong>但還不能把多人課表疊在同一張上自動算共同空堂</strong>。要約時間還是得自己對照，這點我覺得是目前比較可惜的地方。
+      </div>
+    </div>
+
+    <!-- ⑤ 出缺席 -->
+    <div class="feature rise">
+      <div class="num">5</div>
+      <h3>出缺席統計與課堂筆記</h3>
+      <p>設定開學日與週數後，系統自動算出每一堂的上課日期，逐堂點記錄就好。</p>
+      <ul>
+        <li>出席／遲到／曠課／請假／停課，五種狀態一鍵標記</li>
+        <li>上方即時統計，翹幾堂心裡有數</li>
+        <li>每堂課可加筆記，考試日期、重點都能記在課程底下</li>
+      </ul>
+      <div class="gallery-wrap">
+        <div class="gallery">
+          <figure data-hint="img2/05-attendance-1.jpg">
+            <img src="img2/05-attendance-1.jpg" alt="出缺席統計與逐堂紀錄">
+            <figcaption>出缺統計＋逐堂紀錄，依設定的週數自動列出</figcaption>
+          </figure>
+          <figure data-hint="img2/05-attendance-2.jpg">
+            <img src="img2/05-attendance-2.jpg" alt="課堂筆記">
+            <figcaption>筆記可標「考試」等類型，掛在課程底下</figcaption>
+          </figure>
+        </div>
+        <p class="swipe-hint">← 左右滑動看 <b>2</b> 張 →</p>
+      </div>
+      <div class="note-real">
+        <strong>目前的兩個限制：</strong><br>
+        ① <strong>週數最少 4 週</strong>，低於這個數字設不了。<br>
+        ② <strong>週數綁定整份課表</strong>——同一份課表裡所有課共用同一個週數，沒辦法單科調整。<br>
+        如果你們學校正好在 <strong>16／18 週轉換的過渡期</strong>，或不同課週數不一樣，目前只能取一個共同值再自己微調。<br>
+        <strong>開發者已知道這個需求，之後預計會改成更彈性、能對應各校不同週數的模式。</strong>
+      </div>
+    </div>
+  </section>
+
+<!-- ============ 開始使用 ============ -->
+<section class="soft">
+  <div class="wrap">
+    <p class="eyebrow rise">Getting started</p>
+    <h2 class="rise">開學前先做這四步</h2>
+    <p class="lead rise">建課表是最花時間的一步，先有心理準備。</p>
+
+    <ol class="steps rise">
+      <li>
+        <h3>下載並註冊</h3>
+        <p>可以直接用學校信箱註冊，也可以先用自己的信箱註冊、之後再驗證學生身分。</p>
+      </li>
+      <li>
+        <h3>建立這學期的課表</h3>
+        <p>主頁下方<strong>中間的日曆按鍵</strong> → 右上角「＋」逐門輸入課名、時間、學分、教室、老師。<strong>一整個學期大約要 10–15 分鐘</strong>，建議一次做完。建好之後加好友、分享連結等功能才會開放。</p>
+        <p style="margin-top:10px"><strong>💡 大二以上的省時做法：</strong>如果你只是想補回<strong>過去學期</strong>的資料來算 GPA 和畢業學分，建立時可以把<strong>時間設為未定</strong>，只填<strong>課名和學分數</strong>就好。這樣能快速把歷年課程灌進 GPA 與學分計算系統，不用把每一堂的時間、教室都補齊。</p>
+      </li>
+      <li>
+        <h3>開啟鎖定畫面即時動態</h3>
+        <p>設定 → 即時動態 → 打開開關。之後每天不用打開 app 就看得到今天的課。</p>
+      </li>
+      <li>
+        <h3>設定開學日與週數</h3>
+        <p>點進任一門課設定開學日，系統會自動算出 18 週的上課日期，出缺席就能開始記。</p>
+      </li>
+    </ol>
+
+    <div class="note-real with-cat rise">
+      <strong>先說老實話：</strong>建課表要一格一格自己填，沒有從學校系統一鍵匯入這種事。第一次用會覺得有點花時間，但<strong>建好之後整學期都不用再動</strong>，GPA、畢業進度、出缺席都是接在這份課表上跑的。建議挑一個有空的晚上一次弄完。
+      <img class="cat" src="img2/deco-sorry.png" alt="" loading="lazy">
+    </div>
+  </div>
+</section>
+
+<!-- ============ 捷徑進階 ============ -->
+<section>
+  <div class="wrap">
+    <p class="eyebrow rise">Advanced · iOS</p>
+    <h2 class="rise">讓鎖定畫面顯示更久（iPhone 捷徑）</h2>
+    <p class="lead rise">只用 App 就會有基本的即時動態。想讓它一整天都在，加一個捷徑自動化即可——<strong>這是進階選項，不做也不影響基本使用</strong>。</p>
+
+    <div class="gallery-wrap rise">
+      <div class="gallery">
+        <figure data-hint="img2/06-shortcut-1.jpg">
+          <img src="img2/06-shortcut-1.jpg" alt="捷徑自動執行設定說明">
+          <figcaption>為什麼要設捷徑：Live Activity 每次最多約 8 小時</figcaption>
+        </figure>
+        <figure data-hint="img2/06-shortcut-2.jpg">
+          <img src="img2/06-shortcut-2.jpg" alt="步驟一 新增自動化">
+          <figcaption>① 捷徑 App → 自動化 → 新增自動化操作</figcaption>
+        </figure>
+        <figure data-hint="img2/06-shortcut-3.jpg">
+          <img src="img2/06-shortcut-3.jpg" alt="步驟二 選特定時間">
+          <figcaption>② 觸發條件選「特定時間」</figcaption>
+        </figure>
+        <figure data-hint="img2/06-shortcut-4.jpg">
+          <img src="img2/06-shortcut-4.jpg" alt="步驟三 設定時間與重複">
+          <figcaption>③ 設時間、選「每天」、務必選「立即執行」</figcaption>
+        </figure>
+        <figure data-hint="img2/06-shortcut-5.jpg">
+          <img src="img2/06-shortcut-5.jpg" alt="步驟四 找到 Unigent">
+          <figcaption>④ 在動作列表中找到 Unigent</figcaption>
+        </figure>
+        <figure data-hint="img2/06-shortcut-6.jpg">
+          <img src="img2/06-shortcut-6.jpg" alt="步驟五 選 Start Live Activity">
+          <figcaption>⑤ 選「Start Live Activity」</figcaption>
+        </figure>
+        <figure data-hint="img2/06-shortcut-7.jpg">
+          <img src="img2/06-shortcut-7.jpg" alt="步驟六 確認與進階提醒">
+          <figcaption>⑥ 回列表確認；想更久可再加一個約 8 小時後的</figcaption>
+        </figure>
+      </div>
+      <p class="swipe-hint">← 左右滑動看 <b>7</b> 張完整步驟 →</p>
+    </div>
+
+    <div class="note-real rise">
+      <strong>小提醒：</strong>找不到 Unigent 動作時，先打開一次 App 再回捷徑重試。通常設 1 個（第一堂課前）就夠，很長的一天才需要加到 2 個。<strong>即使設了捷徑，Live Activity 仍不保證 24 小時連續顯示</strong>，這是 iOS 本身的限制。
+    </div>
+  </div>
+</section>
+
+<!-- ============ 常見問題 ============ -->
+<section class="soft">
+  <div class="wrap">
+    <div class="faq-head rise">
+      <div class="txt">
+        <p class="eyebrow">FAQ</p>
+        <h2>常見問題</h2>
+      </div>
+      <img src="img2/deco-qa.png" alt="" loading="lazy">
+    </div>
+
+    <div class="rise">
+      <details>
+        <summary>一定要用學校信箱才能註冊嗎？</summary>
+        <p>不一定。目前有兩種方式：</p>
+        <ul>
+          <li><strong>直接用學校信箱註冊</strong>，一次完成驗證</li>
+          <li><strong>先用自己的信箱註冊</strong>，之後再用錄取通知、學生證或學校信箱其中一種完成學生身分驗證</li>
+        </ul>
+        <p>第二種的好處是<strong>畢業後學校信箱停用了，帳號還在</strong>，不會因為信箱失效就登不進去。</p>
+        <p>⚠️ 早期版本有些剛升大學的同學用「准考證號」註冊，後來需要改成學校信箱。開發者已知悉這個情況，未來版本預計會開放修改信箱或改綁學號。<strong>如果你現在正好遇到這個問題，可以先聯絡官方客服。</strong></p>
+      </details>
+
+      <details>
+        <summary>我的學校有支援嗎？</summary>
+        <p>目前已有 <strong>150 所以上</strong>的大專校院有同學在使用，涵蓋國立、私立、科技大學、專科學校，另有部分香港的學校。你可以在下面搜尋看看：</p>
+        <input class="school-search" type="search" placeholder="輸入學校名稱搜尋，例如：逢甲" aria-label="搜尋學校">
+        <div class="schools" id="schoolList">
+淡江大學／輔仁大學／國立高雄科技大學／逢甲大學／銘傳大學／東海大學／東吳大學／中原大學／世新大學／朝陽科技大學／亞洲大學／靜宜大學／元智大學／中國文化大學／國立成功大學／國立臺中科技大學／國立虎尾科技大學／國立勤益科技大學／國立臺灣大學／國立臺灣師範大學／國立清華大學／南臺科技大學／國立東華大學／國立屏東大學／國立雲林科技大學／義守大學／國立政治大學／國立聯合大學／國立嘉義大學／國立中正大學／國立屏東科技大學／國立臺灣海洋大學／致理科技大學／國立臺北大學／國立中興大學／國立陽明交通大學／實踐大學／國立中央大學／國立臺北科技大學／國立臺灣科技大學／弘光科技大學／國立彰化師範大學／長庚大學／國立臺南大學／中國醫藥大學／國立臺北商業大學／臺北市立大學／國立暨南國際大學／國立宜蘭大學／長庚科技大學／中山醫學大學／嘉南藥理大學／國立高雄大學／國立中山大學／高雄醫學大學／國立臺北護理健康大學／台南應用科技大學／南華大學／文藻外語大學／國立臺中教育大學／國立高雄師範大學／明志科技大學／長榮大學／正修科技大學／國立臺東大學／龍華科技大學／國立臺北教育大學／國立金門大學／臺北醫學大學／國立臺灣藝術大學／中臺科技大學／樹德科技大學／嶺東科技大學／大同大學／慈濟大學／國立高雄餐旅大學／亞東科技大學／國立臺灣體育運動大學／輔英科技大學／醒吾科技大學／德明財經科技大學／佛光大學／中國科技大學／僑光科技大學／明新科技大學／健行科技大學／國立體育大學／國立臺北藝術大學／臺北城市科技大學／元培醫事科技大學／國立澎湖科技大學／馬偕醫學大學／大葉大學／中華醫事科技大學／景文科技大學／萬能科技大學／樹人醫護管理專科學校／崑山科技大學／大仁科技大學／國防醫學大學／新生醫護管理專科學校／開南大學／台北海洋科技大學／國立臺南藝術大學／耕莘健康管理專科學校／仁德醫護管理專科學校／真理大學／黎明技術學院／馬偕醫護管理專科學校／玄奘大學／康寧大學／美和科技大學／敏惠醫護管理專科學校／中信金融管理學院／修平科技大學／中華大學／國立臺東專科學校／國防大學／崇仁醫護管理專科學校／中央警察大學／宏國德霖科技大學／吳鳳科技大學／中信科技大學／建國科技大學／國立臺灣戲曲學院／國立臺南護理專科學校／南開科技大學／聖母醫護管理專科學校／國立空中大學／中華科技大學／南亞技術學院／臺灣警察專科學校／東南科技大學／台鋼科技大學／育達科技大學／高雄市立空中大學／崇右影藝科技大學／敏實科技大學／德育護理健康學院／聖方濟各大學／聖約翰科技大學／嶺南大學／法鼓文理學院／香港理工大學／香港大學／香港都會大學／香港城市大學／香港中文大學／香港浸會大學／香港恒生大學／香港科技大學／香港教育大學／香港樹仁大學
+        </div>
+        <p style="margin-top:12px">找不到你的學校？可以先下載看看，App 內的學校清單會持續更新。</p>
+      </details>
+
+      <details>
+        <summary>和其他課表 app 有什麼不一樣？</summary>
+        <p>老實說，看你要解決哪個問題——沒有哪一個是唯一正解。</p>
+        <ul>
+          <li><strong>只想跟朋友對時間找空堂</strong> → <strong>不揪</strong>是很純粹的選擇。一位大學生獨立開發，這件事做得很專注，加好友就能看誰現在有空</li>
+          <li><strong>想一個 App 同時處理課表、畢業進度、同校社群</strong> → Unigent 目前把這幾件事放在一起，含依領域分類的畢業進度、鎖定畫面即時動態</li>
+          <li><strong>只需要純課表</strong> → Schooly、極簡課表介面都很精簡，但沒有社群或畢業進度</li>
+        </ul>
+        <div class="tablewrap">
+          <table>
+            <tr><th>面向</th><th>Unigent</th><th>不揪</th></tr>
+            <tr><td>課表建立</td><td>✅ 手動輸入</td><td>✅ 核心功能</td></tr>
+            <tr><td>找共同空堂</td><td>🔸 可看對方課表，不自動疊算</td><td>✅ 唯一核心，多人一眼看</td></tr>
+            <tr><td>GPA／畢業進度</td><td>✅ 分領域計算</td><td>❌</td></tr>
+            <tr><td>鎖定畫面即時動態</td><td>✅</td><td>❌</td></tr>
+            <tr><td>校內看板／跨校廣場</td><td>✅</td><td>基礎佈告欄</td></tr>
+            <tr><td>課程評價</td><td>❌ 目前沒有</td><td>❌</td></tr>
+          </table>
+        </div>
+        <p style="margin-top:12px"><strong>Unigent 目前的限制我也講清楚：</strong>課表要手動建、課程類別要自己設、廣場活躍度因學校而異、課程評價功能目前沒有、Android 更新略晚於 iOS。</p>
+      </details>
+
+      <details>
+        <summary>要填學號和真實姓名，資料安全嗎？</summary>
+        <p>需要這些資料主要是為了<strong>確認在校生身分</strong>——阻擋校外人士、防止同一人重複註冊。條款明訂禁止盜用他人學校信箱、學生證或在學證明。</p>
+        <p><strong>依官方隱私權政策，幾個你該知道的重點：</strong></p>
+        <ul>
+          <li><strong>必要 vs 選擇性</strong>：帳號管理、身分驗證、推播是必要處理；<strong>行為分析（Firebase Analytics / GA4）屬選擇性，你可以退出</strong>，寄信到 contact@unigent.tw 主旨寫「行為分析退出請求」即可，不影響核心功能</li>
+          <li><strong>學生證照片</strong>加密保存，最長 3 年後刪除</li>
+          <li><strong>操作紀錄</strong> 2 年、<strong>推播紀錄</strong> 180 日、<strong>已讀通知</strong> 90 日後自動刪除</li>
+          <li><strong>可申請刪除帳號</strong>，有 30 日緩衝期，期間內可取消</li>
+          <li>目前<strong>未與第三方廣告商合作進行個人化廣告投放</strong></li>
+          <li>發生外洩時，須於知悉後 <strong>72 小時內通報個資會（PDPC）</strong>並通知受影響者</li>
+          <li>你有查詢、閱覽、複製、更正、停止利用、刪除六項權利，寄 contact@unigent.tw，30 日內回覆</li>
+        </ul>
+        <p><strong>⚠️ 這幾點請自己衡量，我不會替你判斷：</strong></p>
+        <ul>
+          <li>營運者是<strong>韓國的個人開發者</strong>，不是台灣公司</li>
+          <li>資料<strong>跨境儲存</strong>於印度（Supabase 資料庫）、美國（Firebase 推播／分析／當機報告）、韓國（推播處理）、台灣（快取）</li>
+          <li>這是<strong>開放性社群平台</strong>，公開頁面任何人都看得到；<strong>即使匿名發文，遇到法院命令等合法請求時仍可能被揭露真實身分</strong></li>
+          <li>準據法為中華民國法律，管轄法院為台灣台北地方法院</li>
+        </ul>
+        <p><strong>完整條款請以官方版本為準</strong>——我只是整理重點，不構成任何保證。有疑問可寄 contact@unigent.tw 或 support@unigent.tw。</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============ 開發者 ============ -->
+<section>
+  <div class="wrap">
+    <p class="eyebrow rise">About the developer</p>
+    <h2 class="rise">這個 App 是誰做的</h2>
+    <p class="lead rise">下面是開發者自己在社群上說過的話，我摘了跟 Unigent 有關的部分。</p>
+
+    <div class="devcard rise">
+      <div class="devhead">
+        <img src="img2/dev-avatar.jpg" alt="Unigent 開發者頭像">
+        <div class="who">Unigent 開發者
+          <span>休學中的韓國大學生｜曾在東吳大學念過書</span>
+        </div>
+      </div>
+
+      <div class="quote">
+        <p>「我是曾經在東吳大學短暫念過書的韓國人。因為和東吳、政大的朋友們一起，想做一個能讓大學生校園生活更方便一點的 App，所以就把它做出來了。」</p>
+        <p>「這是東吳大學、政治大學、漢陽大學、亞洲大學（韓國）的學生們一起發想、開發的 App。透過學校信箱驗證，只有同校的人才能聊，對其他學校完全不公開。」</p>
+        <p>「『我真的做得到嗎？』每天都帶著懷疑，和台灣的朋友們一起討論怎麼把 App 做得更好……收到大家說『很開心能用到這個 App』的訊息，真的覺得自己好像擁有了全世界。」</p>
+        <p>「在成為大學生們必備 App 的那一天到來之前，我會盡全力和大家溝通、持續改善。」</p>
+      </div>
+
+      <p style="margin-top:18px;margin-bottom:0">
+        目前也在做 Product Manager 實習，並希望之後能在台灣創業，做一個<strong>連結韓國與台灣的 App</strong>。
+      </p>
+
+      <div class="note-real">
+        <strong>為什麼把這段放上來：</strong>我覺得知道「是誰做的、為什麼做」，比多列三個功能有用。
+        這個 App 是一位還在念書的個人開發者，和台韓幾所學校的學生一起做的——所以它更新很快，但也代表<strong>規模和客服能量都有限</strong>。
+        上面第 4 點提到的共同空堂、第 5 點的週數彈性，都是還在路上的東西。
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============ 結尾 CTA ============ -->
+<section class="final">
+  <div class="wrap">
+    <h2 class="rise">開學前把課表排好</h2>
+    <p class="rise">iOS 與 Android 都可以使用，點擊後會自動導向你的商店。</p>
+    <a class="btn rise" href="https://unigent-amb.s.gy/app">免費下載 Unigent</a>
+  </div>
+</section>
+
+<!-- ============ 頁尾 ============ -->
+<footer>
+  <div class="wrap">
+    <div class="note">
+      <strong>關於這個頁面</strong><br>
+      本頁由 <strong>unigent 校園大使 林禹丞</strong> 製作，<strong>不是 unigent 官方網站</strong>，內容為個人整理的使用心得與功能說明。
+      我與 unigent 之間有校園大使的合作關係，依規範在此揭露。<br>
+      本頁提及的其他工具（不揪、Schooly、極簡課表）僅供比較參考，你可以自行選擇最順手的。
+    </div>
+    <p>
+      官方資訊請以 App Store／Google Play 商店頁面與官方公告為準。<br>
+      功能說明依撰寫當下版本整理，App 更新後可能有出入。<br>
+      服務條款與隱私權政策重點整理自官方文件（2026-02-24 版），完整內容請以官方版本為準。<br>
+      開發者引言摘自其公開社群貼文，僅節錄與 Unigent 相關的部分。
+    </p>
+    <span class="ver">版本 v1.4 ・ 最後更新 2026-07-31</span>
+  </div>
+</footer>
+
+<button id="toTop" aria-label="回到頂端" title="回到頂端">↑</button>
+
+<script>
+/* 圖片缺失時顯示佔位 */
+document.querySelectorAll('.gallery img').forEach(function(img){
+  var mark=function(){img.closest('figure').classList.add('empty');};
+  img.addEventListener('error',mark);
+  if(img.complete&&img.naturalWidth===0)mark();
+});
+
+/* 捲動淡入 */
+var io=new IntersectionObserver(function(es){
+  es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});
+},{threshold:0.12});
+document.querySelectorAll('.rise').forEach(function(el){io.observe(el);});
+
+/* 學校搜尋 */
+(function(){
+  var box=document.querySelector('.school-search');
+  var list=document.getElementById('schoolList');
+  if(!box||!list)return;
+  var all=list.textContent.trim().split('／').map(function(s){return s.trim();}).filter(Boolean);
+  list.textContent=all.join('／');
+  box.addEventListener('input',function(){
+    var q=box.value.trim();
+    if(!q){list.textContent=all.join('／');return;}
+    var hit=all.filter(function(s){return s.indexOf(q)>-1;});
+    list.textContent=hit.length?hit.join('／'):'查無「'+q+'」。可以先下載看看，App 內的學校清單會持續更新。';
+  });
+})();
+</script>
+
+<script>
+/* 回到頂部 */
+(function(){
+  var b=document.getElementById('toTop');
+  var onScroll=function(){ b.classList.toggle('show', window.scrollY>520); };
+  window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
+  b.addEventListener('click',function(){ window.scrollTo({top:0,behavior:'smooth'}); });
+})();
+
+</script>
+
+</body>
+</html>

@@ -681,34 +681,61 @@ footer a{color:var(--accent)}
       服務條款與隱私權政策重點整理自官方文件（2026-02-24 版），完整內容請以官方版本為準。<br>
       開發者引言摘自其公開社群貼文，僅節錄與 Unigent 相關的部分。
     </p>
-    <span class="ver">版本 v1.7 ・ 最後更新 2026-07-31</span>
+    <span class="ver">版本 v1.8 ・ 最後更新 2026-07-31</span>
   </div>
 </footer>
 
 <button id="toTop" aria-label="回到頂端" title="回到頂端">↑</button>
 
 <script>
-/* 複製信箱（含不支援 clipboard API 時的備援） */
+/* 複製信箱
+   ・主要走同步的 execCommand：在使用者手勢內立即執行，不會跳權限提示，iOS Safari 也支援
+   ・失敗才退到非同步的 Clipboard API
+   ・都失敗就直接幫使用者選取文字，讓他長按／Ctrl+C 自己複製 */
 (function(){
   var btn=document.getElementById('copyMail'), el=document.getElementById('myMail');
   if(!btn||!el) return;
+  var timer;
+
+  function flash(msg,done){
+    clearTimeout(timer);
+    btn.textContent=msg;
+    btn.classList.toggle('done',!!done);
+    timer=setTimeout(function(){btn.textContent='複製信箱';btn.classList.remove('done');},2200);
+  }
+  function ok(){ flash('已複製 ✓',true); }
+
+  function copySync(txt){
+    var ta=document.createElement('textarea');
+    ta.value=txt;
+    ta.setAttribute('readonly','');
+    ta.style.cssText='position:fixed;top:0;left:0;width:1px;height:1px;opacity:0;border:0;padding:0';
+    document.body.appendChild(ta);
+    var sel=document.getSelection(), prev=sel.rangeCount?sel.getRangeAt(0):null, done=false;
+    try{
+      ta.focus(); ta.select(); ta.setSelectionRange(0,txt.length);
+      done=document.execCommand('copy');
+    }catch(e){ done=false; }
+    document.body.removeChild(ta);
+    if(prev){ sel.removeAllRanges(); sel.addRange(prev); }
+    return done;
+  }
+
+  function selectForManual(){
+    try{
+      var r=document.createRange(); r.selectNodeContents(el);
+      var s=document.getSelection(); s.removeAllRanges(); s.addRange(r);
+    }catch(e){}
+    flash('請自行複製反白處');
+  }
+
   btn.addEventListener('click',function(){
-    var txt=el.textContent.trim(), ok=function(){
-      btn.textContent='已複製 ✓'; btn.classList.add('done');
-      setTimeout(function(){btn.textContent='複製信箱';btn.classList.remove('done');},2000);
-    };
-    if(navigator.clipboard&&window.isSecureContext){
-      navigator.clipboard.writeText(txt).then(ok).catch(fallback);
-    }else{ fallback(); }
-    function fallback(){
-      var ta=document.createElement('textarea');
-      ta.value=txt; ta.setAttribute('readonly','');
-      ta.style.cssText='position:absolute;left:-9999px;top:0';
-      document.body.appendChild(ta);
-      ta.select(); ta.setSelectionRange(0,txt.length);
-      try{ document.execCommand('copy'); ok(); }
-      catch(e){ btn.textContent='請長按上方文字複製'; setTimeout(function(){btn.textContent='複製信箱';},2600); }
-      document.body.removeChild(ta);
+    var txt=el.textContent.trim();
+    if(copySync(txt)){ ok(); return; }
+    if(navigator.clipboard && window.isSecureContext){
+      navigator.clipboard.writeText(txt).then(ok, selectForManual);
+    }else{
+      selectForManual();
     }
   });
 })();

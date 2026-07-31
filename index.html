@@ -212,6 +212,38 @@ footer a{color:var(--accent)}
 .quote p{margin-bottom:10px}
 .quote p:last-child{margin-bottom:0}
 
+/* 官方 Threads 連結列 */
+.threadsbar{
+  display:flex;align-items:center;gap:14px;margin-top:20px;padding:14px 16px;
+  background:var(--bg-soft);border:1px solid var(--line);border-radius:14px;
+  text-decoration:none;color:inherit;transition:border-color .2s ease,transform .2s ease;
+}
+.threadsbar:hover{border-color:var(--accent);transform:translateY(-1px)}
+.threadsbar svg{width:26px;height:26px;flex-shrink:0;fill:var(--ink)}
+.threadsbar .tt{flex:1;min-width:0;line-height:1.45}
+.threadsbar .tt b{display:block;font-size:15.5px;font-weight:800}
+.threadsbar .tt span{font-size:13.5px;color:var(--ink-soft)}
+.threadsbar .go{font-size:14px;color:var(--accent);font-weight:700;white-space:nowrap}
+
+/* 頁尾：加我好友 */
+.addme{background:#fff;border:1px solid var(--line);border-radius:12px;padding:18px;margin-bottom:18px}
+.addme b{display:block;font-size:15.5px;color:var(--ink);margin-bottom:6px}
+.addme p{font-size:14px;line-height:1.7;margin-bottom:12px}
+.mailrow{display:flex;gap:8px;align-items:stretch;flex-wrap:wrap}
+.mailrow code{
+  flex:1;min-width:0;background:var(--bg-soft);border:1px solid var(--line);border-radius:9px;
+  padding:11px 13px;font-size:14px;color:var(--ink);word-break:break-all;
+  font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+.mailrow button{
+  flex-shrink:0;background:var(--accent);color:#fff;border:0;border-radius:9px;
+  padding:11px 20px;font-size:14.5px;font-weight:700;cursor:pointer;font-family:inherit;
+  min-height:44px;transition:opacity .2s ease;
+}
+.mailrow button:active{opacity:.75}
+.mailrow button.done{background:#2e9e63}
+@media(max-width:420px){ .mailrow code{flex-basis:100%} .mailrow button{width:100%} }
+
 .rise{opacity:0;transform:translateY(18px);transition:opacity .55s ease,transform .55s ease}
 .rise.in{opacity:1;transform:none}
 @media (prefers-reduced-motion:reduce){
@@ -405,7 +437,8 @@ footer a{color:var(--accent)}
         <strong>開發者已知道這個需求，之後預計會改成更彈性、能對應各校不同週數的模式。</strong>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
 <!-- ============ 開始使用 ============ -->
 <section class="soft">
@@ -601,6 +634,15 @@ footer a{color:var(--accent)}
         這個 App 是一位還在念書的個人開發者，和台韓幾所學校的學生一起做的——所以它更新很快，但也代表<strong>規模和客服能量都有限</strong>。
         上面第 4 點提到的共同空堂、第 5 點的週數彈性，都是還在路上的東西。
       </div>
+
+      <a class="threadsbar" href="https://www.threads.com/@unigent.tw" target="_blank" rel="noopener noreferrer">
+        <svg viewBox="0 0 192 192" aria-hidden="true"><path d="M141.5 89.6a71 71 0 0 0-2.7-1.2c-1.6-29.3-17.6-46-44.5-46.2h-.4c-16.1 0-29.5 6.9-37.7 19.4l14.8 10.2c6.1-9.3 15.8-11.3 22.9-11.3h.3c8.9.1 15.6 2.6 19.9 7.6 3.2 3.6 5.3 8.6 6.3 14.9-7.6-1.3-15.8-1.7-24.6-1.2-24.7 1.4-40.6 15.8-39.5 35.8.5 10.2 5.6 18.9 14.3 24.6 7.3 4.8 16.8 7.2 26.6 6.6 13-.7 23.2-5.7 30.3-14.7 5.4-6.9 8.8-15.8 10.3-27 6.2 3.7 10.7 8.6 13.2 14.5 4.3 10 4.5 26.4-8.9 39.8-11.7 11.7-25.8 16.8-47.1 17-23.6-.2-41.5-7.8-53.2-22.5C30.9 141.7 25.3 122 25.1 96c.2-26 5.8-45.7 16.7-58.6C53.5 22.7 71.4 15.1 95 15c23.8.2 42 7.8 54.1 22.7 5.9 7.3 10.4 16.4 13.3 27.1l17.4-4.6c-3.6-13.1-9.2-24.5-16.9-33.9C147.4 7.5 124.5-.1 95.1 0h-.1C65.6.1 43 7.8 27.8 26.8 14.2 43.7 7.2 67.3 7 96v.1c.2 28.7 7.2 52.3 20.8 69.2C43 184.2 65.6 191.9 95 192h.1c26.1-.2 44.5-7 59.7-22.2 19.9-19.9 19.3-44.8 12.8-60.2-4.7-11-13.6-20-26.1-25zM97 141.2c-10.9.6-22.2-4.3-22.7-14.4-.4-7.5 5.3-15.8 23.3-16.9 2.1-.1 4.1-.2 6.1-.2 6.5 0 12.6.6 18.2 1.8-2.1 26.1-14.4 29.1-24.9 29.7z"/></svg>
+        <div class="tt">
+          <b>Unigent 官方 Threads</b>
+          <span>@unigent.tw ・ 最新公告、更新內容、新上線的學校都會發在這裡</span>
+        </div>
+        <span class="go">前往 →</span>
+      </a>
     </div>
 
   </div>
@@ -618,6 +660,15 @@ footer a{color:var(--accent)}
 <!-- ============ 頁尾 ============ -->
 <footer>
   <div class="wrap">
+    <div class="addme">
+      <b>在 Unigent 上加我好友</b>
+      <p>我也是用 Unigent 的學生。如果你想找人一起對課表、或用得有卡住的地方，歡迎加我好友。<br>
+        在 App 裡的加好友欄位<strong>貼上我的學校信箱</strong>就可以了：</p>
+      <div class="mailrow">
+        <code id="myMail">s11322094@stumail.nutn.edu.tw</code>
+        <button id="copyMail" type="button">複製信箱</button>
+      </div>
+    </div>
     <div class="note">
       <strong>關於這個頁面</strong><br>
       本頁由 <strong>unigent 校園大使 林禹丞</strong> 製作，<strong>不是 unigent 官方網站</strong>，內容為個人整理的使用心得與功能說明。
@@ -630,13 +681,38 @@ footer a{color:var(--accent)}
       服務條款與隱私權政策重點整理自官方文件（2026-02-24 版），完整內容請以官方版本為準。<br>
       開發者引言摘自其公開社群貼文，僅節錄與 Unigent 相關的部分。
     </p>
-    <span class="ver">版本 v1.6 ・ 最後更新 2026-07-31</span>
+    <span class="ver">版本 v1.7 ・ 最後更新 2026-07-31</span>
   </div>
 </footer>
 
 <button id="toTop" aria-label="回到頂端" title="回到頂端">↑</button>
 
 <script>
+/* 複製信箱（含不支援 clipboard API 時的備援） */
+(function(){
+  var btn=document.getElementById('copyMail'), el=document.getElementById('myMail');
+  if(!btn||!el) return;
+  btn.addEventListener('click',function(){
+    var txt=el.textContent.trim(), ok=function(){
+      btn.textContent='已複製 ✓'; btn.classList.add('done');
+      setTimeout(function(){btn.textContent='複製信箱';btn.classList.remove('done');},2000);
+    };
+    if(navigator.clipboard&&window.isSecureContext){
+      navigator.clipboard.writeText(txt).then(ok).catch(fallback);
+    }else{ fallback(); }
+    function fallback(){
+      var ta=document.createElement('textarea');
+      ta.value=txt; ta.setAttribute('readonly','');
+      ta.style.cssText='position:absolute;left:-9999px;top:0';
+      document.body.appendChild(ta);
+      ta.select(); ta.setSelectionRange(0,txt.length);
+      try{ document.execCommand('copy'); ok(); }
+      catch(e){ btn.textContent='請長按上方文字複製'; setTimeout(function(){btn.textContent='複製信箱';},2600); }
+      document.body.removeChild(ta);
+    }
+  });
+})();
+
 /* 圖片缺失時顯示佔位 */
 document.querySelectorAll('.gallery img').forEach(function(img){
   var mark=function(){img.closest('figure').classList.add('empty');};

@@ -260,6 +260,37 @@ footer a{color:var(--accent)}
 .quote p{margin-bottom:10px}
 .quote p:last-child{margin-bottom:0}
 
+/* 開發者故事時間軸 */
+.story{list-style:none;margin:22px 0 4px;padding:0}
+.story li{position:relative;padding:0 0 26px 26px;border-left:2px solid var(--accent-line);margin-left:6px}
+.story li:last-child{border-left-color:transparent;padding-bottom:4px}
+.story li::before{
+  content:"";position:absolute;left:-7px;top:7px;width:12px;height:12px;border-radius:50%;
+  background:var(--accent);box-shadow:0 0 0 4px #fff;
+}
+.story .stage{
+  display:inline-block;font-size:12.5px;font-weight:700;letter-spacing:.06em;
+  color:var(--accent);background:var(--accent-soft);border-radius:999px;
+  padding:3px 12px;margin-bottom:9px;line-height:1.5;
+}
+.story p{font-size:16px;line-height:1.85;margin-bottom:10px;color:var(--ink)}
+.story p:last-child{margin-bottom:0}
+.story .said{
+  border-left:3px solid var(--accent-line);padding:2px 0 2px 14px;margin:12px 0 0;
+  color:var(--ink-soft);font-size:15.5px;line-height:1.8;
+}
+.story .aside{font-size:14.5px;color:var(--ink-soft);margin-top:8px}
+.namebox{
+  background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:12px;
+  padding:14px 16px;margin-top:10px;
+}
+.namebox .eq{font-size:19px;font-weight:800;letter-spacing:-.01em;color:#4a2fd0;margin-bottom:4px}
+.namebox p{font-size:15px;margin:0;color:#4a2fd0}
+@media(max-width:420px){
+  .story li{padding-left:20px}
+  .story p{font-size:15.5px}
+}
+
 /* 官方 Threads 連結列 */
 .threadsbar{
   display:flex;align-items:center;gap:14px;margin-top:20px;padding:14px 16px;
@@ -654,6 +685,17 @@ footer a{color:var(--accent)}
       </details>
 
       <details>
+        <summary>這個 App 是哪裡做的？誰在維護？</summary>
+        <p><strong>由一位韓國的個人開發者製作與維護，不是公司，也不是團隊。</strong></p>
+        <ul>
+          <li>他曾到<strong>東吳大學</strong>念暑期華語課程，因此認識了台灣的大學生朋友</li>
+          <li>App Store 上的開發者名稱是 <strong>MINJAE KWON</strong>，可自行查證</li>
+          <li>企劃階段有政大、東吳的台灣學生一起參與討論，<strong>程式開發從頭到現在都是他一個人</strong></li>
+        </ul>
+        <p>知道這件事有兩個好處：<strong>更新通常很快</strong>，因為只有一個人決定；但也代表<strong>客服與人力有限</strong>，回覆不會像大公司那麼即時。上面「這個 App 是誰做的」有完整的來龍去脈。</p>
+      </details>
+
+      <details>
         <summary>要填學號和真實姓名，資料安全嗎？</summary>
         <p>需要這些資料主要是為了<strong>確認在校生身分</strong>——阻擋校外人士、防止同一人重複註冊。條款明訂禁止盜用他人學校信箱、學生證或在學證明。</p>
         <p><strong>依官方隱私權政策，幾個你該知道的重點：</strong></p>
@@ -685,16 +727,58 @@ footer a{color:var(--accent)}
   <div class="wrap">
     <p class="eyebrow rise">About the developer</p>
     <h2 class="rise">這個 App 是誰做的</h2>
-    <p class="lead rise">下面是開發者自己在社群上說過的話，我摘了跟 Unigent 有關的部分。</p>
+    <p class="lead rise">Unigent 不是公司做的，是<strong>一位韓國的個人開發者</strong>寫出來的。下面是他怎麼走到這一步的。</p>
 
     <div class="devcard rise">
       <div class="devhead">
         <img src="img2/dev-avatar.jpg" alt="Unigent 開發者頭像">
         <div class="who">Unigent 開發者
-          <span>休學中的韓國大學生｜曾在東吳大學念過書</span>
+          <span><strong>韓國個人開發者</strong>｜非公司、非團隊｜曾到東吳大學念暑期華語</span>
         </div>
       </div>
 
+      <ol class="story">
+        <li>
+          <span class="stage">起點</span>
+          <p>他是韓國人。2018 年開始喜歡上<strong>一位台灣籍的偶像</strong>，為了聽懂她說的話，開始學中文。</p>
+          <p>後來想把中文學好，報名了<strong>東吳大學的暑期華語課程</strong>，在台灣待了三週——21 天裡有 18 天都跟新認識的台灣朋友在外面跑。</p>
+        </li>
+
+        <li>
+          <span class="stage">這個 App 的起點</span>
+          <p>和朋友約時間的時候，總是要一直問彼此<strong>「你幾點下課」「什麼時候有空」</strong>。</p>
+          <p>他想，如果有個 App 能讓朋友之間直接看到彼此的課表就好了。<strong>Unigent 就是從這個念頭開始的。</strong></p>
+          <p class="aside">這一段我覺得值得特別講：它不是從市場分析來的，是從一件真的很麻煩的小事來的。</p>
+        </li>
+
+        <li>
+          <span class="stage">誰做的</span>
+          <p>回韓國之後，他從<strong>去年九月開始寫，到今年二月 Beta 上線</strong>。政大、東吳的朋友幾乎每天跟他來回討論。</p>
+          <p class="said">「開發雖然全是我一個人做的，但企劃可以說有一半以上都是台灣朋友一起完成的。」</p>
+        </li>
+
+        <li>
+          <span class="stage">名字的由來</span>
+          <p>Unigent 這個名字是他自己組出來的：</p>
+          <div class="namebox">
+            <div class="eq">univ ＋ agent ＝ Unigent</div>
+            <p>「協助大學生活的專員」</p>
+          </div>
+        </li>
+
+        <li>
+          <span class="stage">現在</span>
+          <p>他說目前已經有<strong>接近三萬名台灣大學生</strong>在用。使用的人比他原本預期的多很多，功能許願和回饋也跟著變多，於是他減少了原本其他專案的比重，把心力集中到 Unigent 上。</p>
+          <p class="said">「我做得好嗎？我好像每天都在懷疑自己。<br>但還是很感謝那些願意相信我的台灣朋友。」</p>
+        </li>
+
+        <li>
+          <span class="stage">接下來</span>
+          <p><strong>九月他會再到台灣念書</strong>，他說想把它繼續改進成一個連自己用起來都覺得方便的 App。</p>
+        </li>
+      </ol>
+
+      <p style="margin-top:26px;margin-bottom:6px"><strong>他在社群上說過的話</strong></p>
       <div class="quote">
         <p>「我是曾經在東吳大學短暫念過書的韓國人。因為和東吳、政大的朋友們一起，想做一個能讓大學生校園生活更方便一點的 App，所以就把它做出來了。」</p>
         <p>「這是東吳大學、政治大學、漢陽大學、亞洲大學（韓國）的學生們一起發想、開發的 App。透過學校信箱驗證，只有同校的人才能聊，對其他學校完全不公開。」</p>
@@ -757,9 +841,9 @@ footer a{color:var(--accent)}
       官方資訊請以 App Store／Google Play 商店頁面與官方公告為準。<br>
       功能說明依撰寫當下版本整理，App 更新後可能有出入。<br>
       服務條款與隱私權政策重點整理自官方文件（2026-02-24 版），完整內容請以官方版本為準。<br>
-      開發者引言摘自其公開社群貼文，僅節錄與 Unigent 相關的部分。
+      開發者的故事與引言，來自其公開社群貼文與本人提供的說明，僅節錄與 Unigent 相關的部分。
     </p>
-    <span class="ver">版本 v2.3 ・ 最後更新 2026-07-31</span>
+    <span class="ver">版本 v2.4 ・ 最後更新 2026-07-31</span>
   </div>
 </footer>
 

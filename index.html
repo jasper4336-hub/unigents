@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Unigent 完整使用指南｜大學生課表與校園社群</title>
-<meta name="description" content="Unigent 五大功能完整教學：課表、GPA 計算、校曆整合、多課表管理、出缺席紀錄，含鎖定畫面即時動態設定。由 unigent 校園大使整理，非官方網站。">
+<meta name="description" content="Unigent 五大功能完整教學：課表、GPA 計算、校曆整合、多課表管理、出缺席紀錄，含 iPhone 即時動態與 Android 今日行程常駐通知設定。由 unigent 校園大使整理，非官方網站。">
 
 <meta property="og:title" content="Unigent 完整使用指南">
 <meta property="og:description" content="五大功能一次看懂——課表、GPA、校曆、出缺席、鎖定畫面即時動態。校園大使整理。">
@@ -199,6 +199,23 @@ footer a{color:var(--accent)}
 .note-real.with-cat{text-align:left}
 .note-real .cat{display:block;width:132px;height:auto;margin:14px auto 2px}
 
+/* iOS / Android 分流說明盒 */
+.osbox{
+  background:var(--bg-soft);border:1px solid var(--line);border-radius:12px;
+  padding:15px 17px;margin-top:14px;
+}
+.osbox:first-of-type{margin-top:16px}
+.oshead{display:flex;align-items:center;gap:9px;font-weight:800;font-size:16.5px;margin-bottom:8px;flex-wrap:wrap}
+.ostag{
+  display:inline-block;font-size:12.5px;font-weight:700;letter-spacing:.02em;
+  padding:3px 10px;border-radius:999px;color:#fff;line-height:1.5;
+}
+.ostag.ios{background:#111418}
+.ostag.and{background:#2e9e63}
+.osbox p{margin-bottom:6px;font-size:15.5px}
+.osbox ul{margin-top:8px}
+.osbox li{font-size:15px}
+
 /* 開發者卡 */
 .devcard{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:26px 24px}
 .devhead{display:flex;align-items:center;gap:16px;margin-bottom:18px}
@@ -348,18 +365,36 @@ footer a{color:var(--accent)}
     <!-- ③ 即時動態 -->
     <div class="feature rise">
       <div class="num">3</div>
-      <h3>鎖定畫面直接看今天的課</h3>
-      <p>開啟即時動態後，不用打開 app，鎖定畫面和動態島就顯示今日課程與待辦。</p>
-      <ul>
-        <li>打開 App 時會自動建立或更新</li>
-        <li>依 iOS 機制，每次啟動最多維持約 8 小時</li>
-        <li>想顯示更久可搭配 iPhone 捷徑自動化（下一節有完整教學）</li>
-      </ul>
+      <h3>不用打開 App 就看得到今天的課</h3>
+      <p><strong>iPhone 和 Android 都有這個功能，但名字和位置不一樣</strong>，下面分開說。</p>
+
+      <div class="osbox">
+        <div class="oshead"><span class="ostag ios"> iPhone</span>即時動態</div>
+        <p>開啟後，<strong>鎖定畫面和動態島</strong>會顯示今日課程與待辦。</p>
+        <ul>
+          <li>路徑：<strong>設定 → 即時動態 → 開啟「鎖定畫面即時動態」</strong></li>
+          <li>打開 App 時會自動建立或更新</li>
+          <li>依 iOS 機制，每次啟動最多維持約 8 小時</li>
+          <li>想顯示更久可搭配捷徑自動化（下一節有完整教學）</li>
+        </ul>
+      </div>
+
+      <div class="osbox">
+        <div class="oshead"><span class="ostag and">Android</span>今日行程常駐通知</div>
+        <p>Android 上不叫「即時動態」，叫<strong>「今日行程常駐通知」</strong>，開啟後會<strong>常駐在通知欄</strong>。</p>
+        <ul>
+          <li>路徑：<strong>設定 → 常駐通知 → 打開「今日行程常駐通知」</strong></li>
+          <li>App 內的說明是「在通知欄中持續顯示今日課程和待辦事項」</li>
+          <li><strong>不需要像 iPhone 那樣另外設捷徑</strong>，開了就會留著</li>
+          <li>同一頁還有<strong>「小工具深色模式」與「小工具背景主題」</strong>，可以調主畫面小工具的外觀</li>
+        </ul>
+      </div>
+
       <div class="gallery-wrap">
         <div class="gallery single">
           <figure data-hint="img2/03-live-1.jpg">
-            <img src="img2/03-live-1.jpg" alt="即時動態設定與說明">
-            <figcaption>設定 → 即時動態 → 開啟「鎖定畫面即時動態」</figcaption>
+            <img src="img2/03-live-1.jpg" alt="iPhone 即時動態設定" loading="lazy">
+            <figcaption> iPhone｜設定 → 即時動態</figcaption>
           </figure>
         </div>
       </div>
@@ -458,8 +493,10 @@ footer a{color:var(--accent)}
         <p style="margin-top:10px"><strong>💡 大二以上的省時做法：</strong>如果你只是想補回<strong>過去學期</strong>的資料來算 GPA 和畢業學分，建立時可以把<strong>時間設為未定</strong>，只填<strong>課名和學分數</strong>就好。這樣能快速把歷年課程灌進 GPA 與學分計算系統，不用把每一堂的時間、教室都補齊。</p>
       </li>
       <li>
-        <h3>開啟鎖定畫面即時動態</h3>
-        <p>設定 → 即時動態 → 打開開關。之後每天不用打開 app 就看得到今天的課。</p>
+        <h3>開啟今日行程的常駐顯示</h3>
+        <p><strong> iPhone：</strong>設定 → <strong>即時動態</strong> → 打開開關。<br>
+           <strong>Android：</strong>設定 → <strong>常駐通知</strong> → 打開<strong>「今日行程常駐通知」</strong>。<br>
+           之後每天不用打開 app 就看得到今天的課。</p>
       </li>
       <li>
         <h3>設定開學日與週數</h3>
@@ -477,9 +514,13 @@ footer a{color:var(--accent)}
 <!-- ============ 捷徑進階 ============ -->
 <section>
   <div class="wrap">
-    <p class="eyebrow rise">Advanced · iOS</p>
+    <p class="eyebrow rise">Advanced · iOS only</p>
     <h2 class="rise">讓鎖定畫面顯示更久（iPhone 捷徑）</h2>
     <p class="lead rise">只用 App 就會有基本的即時動態。想讓它一整天都在，加一個捷徑自動化即可——<strong>這是進階選項，不做也不影響基本使用</strong>。</p>
+    <div class="osbox rise" style="margin-bottom:20px">
+      <div class="oshead"><span class="ostag and">Android</span>這一節可以直接跳過</div>
+      <p style="margin-bottom:0">Android 的「今日行程常駐通知」開了就會常駐在通知欄，<strong>沒有 iOS 那個 8 小時的限制，也不需要設捷徑。</strong>下面整節是 iPhone 專用的。</p>
+    </div>
 
     <div class="gallery-wrap rise">
       <div class="gallery">
@@ -568,7 +609,7 @@ footer a{color:var(--accent)}
             <tr><td>課表建立</td><td>✅ 手動輸入</td><td>✅ 核心功能</td></tr>
             <tr><td>找共同空堂</td><td>🔸 可看對方課表，不自動疊算</td><td>✅ 唯一核心，多人一眼看</td></tr>
             <tr><td>GPA／畢業進度</td><td>✅ 分領域計算</td><td>❌</td></tr>
-            <tr><td>鎖定畫面即時動態</td><td>✅</td><td>❌</td></tr>
+            <tr><td>鎖定畫面／通知欄常駐顯示</td><td>✅</td><td>❌</td></tr>
             <tr><td>校內看板／跨校廣場</td><td>✅</td><td>基礎佈告欄</td></tr>
             <tr><td>課程評價</td><td>❌ 目前沒有</td><td>❌</td></tr>
           </table>
@@ -682,7 +723,7 @@ footer a{color:var(--accent)}
       服務條款與隱私權政策重點整理自官方文件（2026-02-24 版），完整內容請以官方版本為準。<br>
       開發者引言摘自其公開社群貼文，僅節錄與 Unigent 相關的部分。
     </p>
-    <span class="ver">版本 v1.9 ・ 最後更新 2026-07-31</span>
+    <span class="ver">版本 v2.0 ・ 最後更新 2026-07-31</span>
   </div>
 </footer>
 

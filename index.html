@@ -100,8 +100,11 @@ p.lead{color:var(--ink-soft)}
 .gallery figcaption{font-size:13px;color:var(--ink-soft);margin-top:8px;width:100%;line-height:1.5}
 .gallery.single{justify-content:center}
 .gallery.single figure{width:300px}
-/* 雙圖對照（iOS / Android）：桌機並排置中，手機可滑 */
+/* 雙圖對照（iOS / Android）：桌機並排置中，手機可滑
+   ⚠️ 必須用 safe center：純 center 在內容溢出時會把第一張的左半切掉且捲不回去
+   （舊瀏覽器不認得 safe，會沿用上一行的 center） */
 .gallery.pair{justify-content:center}
+.gallery.pair{justify-content:safe center}
 .gallery.pair img{aspect-ratio:554/1200;object-fit:cover;object-position:top}
 .gallery.pair figcaption{margin-top:10px}
 .gallery.pair figcaption .ostag{margin-bottom:4px}
@@ -733,7 +736,7 @@ footer a{color:var(--accent)}
       服務條款與隱私權政策重點整理自官方文件（2026-02-24 版），完整內容請以官方版本為準。<br>
       開發者引言摘自其公開社群貼文，僅節錄與 Unigent 相關的部分。
     </p>
-    <span class="ver">版本 v2.1 ・ 最後更新 2026-07-31</span>
+    <span class="ver">版本 v2.2 ・ 最後更新 2026-07-31</span>
   </div>
 </footer>
 

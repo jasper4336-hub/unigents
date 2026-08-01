@@ -100,6 +100,11 @@ p.lead{color:var(--ink-soft)}
 .gallery figcaption{font-size:13px;color:var(--ink-soft);margin-top:8px;width:100%;line-height:1.5}
 .gallery.single{justify-content:center}
 .gallery.single figure{width:300px}
+/* 雙圖對照（iOS / Android）：桌機並排置中，手機可滑 */
+.gallery.pair{justify-content:center}
+.gallery.pair img{aspect-ratio:554/1200;object-fit:cover;object-position:top}
+.gallery.pair figcaption{margin-top:10px}
+.gallery.pair figcaption .ostag{margin-bottom:4px}
 /* 主視覺可為任意比例 */
 .hero .gallery-wrap{margin:34px auto 0;max-width:640px}
 .hero .gallery{overflow:visible;padding:0;justify-content:center}
@@ -391,12 +396,17 @@ footer a{color:var(--accent)}
       </div>
 
       <div class="gallery-wrap">
-        <div class="gallery single">
+        <div class="gallery pair">
           <figure data-hint="img2/03-live-1.jpg">
-            <img src="img2/03-live-1.jpg" alt="iPhone 即時動態設定" loading="lazy">
-            <figcaption> iPhone｜設定 → 即時動態</figcaption>
+            <img src="img2/03-live-1.jpg" alt="iPhone 即時動態設定畫面" loading="lazy">
+            <figcaption><span class="ostag ios"> iPhone</span><br>設定 → 即時動態</figcaption>
+          </figure>
+          <figure data-hint="img2/03-live-android.jpg">
+            <img src="img2/03-live-android.jpg" alt="Android 今日行程常駐通知設定畫面" loading="lazy">
+            <figcaption><span class="ostag and">Android</span><br>設定 → 常駐通知</figcaption>
           </figure>
         </div>
+        <p class="swipe-hint">← 左右滑動比較 <b>2</b> 個系統 →</p>
       </div>
     </div>
 
@@ -723,7 +733,7 @@ footer a{color:var(--accent)}
       服務條款與隱私權政策重點整理自官方文件（2026-02-24 版），完整內容請以官方版本為準。<br>
       開發者引言摘自其公開社群貼文，僅節錄與 Unigent 相關的部分。
     </p>
-    <span class="ver">版本 v2.0 ・ 最後更新 2026-07-31</span>
+    <span class="ver">版本 v2.1 ・ 最後更新 2026-07-31</span>
   </div>
 </footer>
 
